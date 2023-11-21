@@ -11,7 +11,59 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Client {
+  id            Int           @id @default(autoincrement())
+  name          String
+  firstSurname  String?
+  secondSurname String?
+  gender        Gender?       @relation(fields: [genderId], references: [id])
+  genderId      Int?
+  country       String?
+  birthDate     DateTime?
+  document      Document?     @relation(fields: [documentId], references: [id])
+  documentId    Int?
+  notes         String?
+  Reservation   Reservation[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  isDeleted     Boolean       @default(false)
+}
+
+model Reservation {
+  id           Int      @id @default(autoincrement())
+  client       Client   @relation(fields: [clientId], references: [id])
+  clientId     Int
+  room         Room     @relation(fields: [roomId], references: [id])
+  roomId       Int
+  checkInDate  DateTime @default(now())
+  checkOutDate DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  isDeleted    Boolean  @default(false)
+}
+
 model Room {
-  id   Int    @id @default(autoincrement())
-  name String @unique
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  Reservation Reservation[]
+}
+
+model Document {
+  id             Int          @id @default(autoincrement())
+  documentType   DocumentType @relation(fields: [documentTypeId], references: [id])
+  documentTypeId Int
+  expeditonDate  DateTime
+  Client         Client[]
+}
+
+model DocumentType {
+  id       Int        @id @default(autoincrement())
+  name     String     @unique
+  Document Document[]
+}
+
+model Gender {
+  id     Int      @id @default(autoincrement())
+  name   String   @unique
+  Client Client[]
 }
