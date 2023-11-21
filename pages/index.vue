@@ -1,5 +1,4 @@
 <template>
-   <h1 class="text-center">Test</h1>
-
-   <Button label="Submit" />
+   <h2 class="text-center">/ Route</h2>
+   <ReservationsListComponent />
 </template> 
