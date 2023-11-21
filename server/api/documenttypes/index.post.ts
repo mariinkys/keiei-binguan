@@ -1,16 +1,19 @@
 import prisma from './../../db/prisma';
 
 export default defineEventHandler(async (event) => {
+   const data = await readBody(event)
+   const body = data.body
+
    try {
-      const documentTypes = await prisma.documentType.findMany({
-         where: {
-            isDeleted: false
+      const documentType = await prisma.documentType.create({
+         data: {
+            name: body.name,
+            isDeleted: false,
          }
       });
       setResponseStatus(event, 200)
-      return documentTypes
+      return documentType
    } catch (error) {
-      console.log(error)
       setResponseStatus(event, 404)
       return event
    }

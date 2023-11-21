@@ -46,6 +46,7 @@ model Room {
   id          Int           @id @default(autoincrement())
   name        String        @unique
   Reservation Reservation[]
+  isDeleted   Boolean       @default(false)
 }
 
 model Document {
@@ -54,16 +55,19 @@ model Document {
   documentTypeId Int
   expeditonDate  DateTime
   Client         Client[]
+  isDeleted      Boolean      @default(false)
 }
 
 model DocumentType {
-  id       Int        @id @default(autoincrement())
-  name     String     @unique
-  Document Document[]
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  Document  Document[]
+  isDeleted Boolean    @default(false)
 }
 
 model Gender {
-  id     Int      @id @default(autoincrement())
-  name   String   @unique
-  Client Client[]
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  Client    Client[]
+  isDeleted Boolean  @default(false)
 }
