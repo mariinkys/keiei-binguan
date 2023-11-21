@@ -2,11 +2,11 @@
    <div class="max-w-5xl m-auto" v-if="!loading">
       <form @submit.prevent="onSubmit" class="flex flex-col gap-8">
          <!-- CLIENT SELECT COMPONENT -->
-         <ClientsClientSelectComponentVue :pre-selected="reservation.roomId ?? undefined"
+         <ClientsClientSelectComponent :pre-selected="reservation.roomId ?? undefined"
             @value-changed="(e) => reservation.clientId = e" :editing="!editing" />
 
          <!-- ROOM SELECT COMPONENT -->
-         <RoomsRoomSelectComponentVue :pre-selected="reservation.roomId ?? undefined"
+         <RoomsRoomSelectComponent :pre-selected="reservation.roomId ?? undefined"
             @value-changed="(e) => reservation.roomId = e" :editing="!editing" />
 
          <span class="p-float-label">
