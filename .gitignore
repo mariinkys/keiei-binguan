@@ -17,8 +17,13 @@ logs
 .DS_Store
 .fleet
 .idea
+.vscode
 
 # Local env files
 .env
 .env.*
 !.env.example
+
+#DB
+prisma/db/*
+prisma/migrations/*
