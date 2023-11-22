@@ -1,4 +1,4 @@
 <template>
-   <h2 class="text-center">New Room</h2>
+   <CustomPageTitleComponent text="New Room" />
    <RoomsRoomCreateComponent />
 </template>

@@ -1,4 +1,4 @@
 <template>
-   <h2 class="text-center">Reservations</h2>
+   <CustomPageTitleComponent text="Reservations" />
    <ReservationsListComponent />
 </template> 

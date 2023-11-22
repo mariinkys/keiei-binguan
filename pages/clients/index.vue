@@ -1,4 +1,4 @@
 <template>
-   <h2 class="text-center">Clients</h2>
+   <CustomPageTitleComponent text="Clients" />
    <ClientsListComponent />
 </template> 

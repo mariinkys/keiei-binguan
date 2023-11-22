@@ -1,5 +1,5 @@
 <template>
-   <h2 class="text-center">Edit Client</h2>
+   <CustomPageTitleComponent text="Edit Client" />
    <ClientsClientEditComponent v-if="clientId !== -1" :client-id="clientId" />
 </template>
 
