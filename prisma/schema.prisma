@@ -20,8 +20,7 @@ model Client {
   genderId      Int?
   country       String?
   birthDate     DateTime?
-  document      Document?     @relation(fields: [documentId], references: [id])
-  documentId    Int?
+  document      Document?
   notes         String?
   Reservation   Reservation[]
   createdAt     DateTime      @default(now())
@@ -54,7 +53,8 @@ model Document {
   documentType   DocumentType @relation(fields: [documentTypeId], references: [id])
   documentTypeId Int
   expeditonDate  DateTime
-  Client         Client[]
+  client         Client       @relation(fields: [clientId], references: [id])
+  clientId       Int          @unique
   isDeleted      Boolean      @default(false)
 }
 

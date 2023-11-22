@@ -13,6 +13,11 @@ export default defineEventHandler(async (event) => {
                   id: +body.documentTypeId
                }
             },
+            client: {
+               connect: {
+                  id: +body.clientId
+               }
+            },
             isDeleted: false
          }
       });

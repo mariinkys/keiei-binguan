@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
          },
          include: {
             documentType: true,
+            client: true,
          }
       });
       setResponseStatus(event, 200)
