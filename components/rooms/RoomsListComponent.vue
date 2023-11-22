@@ -1,7 +1,7 @@
 <template>
    <div v-if="!loading">
-      <div v-if="clients.length > 0">
-         <DataTable :value="clients" v-model:filters="filters" tableStyle="min-width: 50rem" paginator :rows="8"
+      <div v-if="rooms.length > 0">
+         <DataTable :value="rooms" v-model:filters="filters" tableStyle="min-width: 50rem" paginator :rows="8"
             sortMode="multiple" removableSort @row-click="onRowClick($event)">
             <template #header>
                <div class="flex justify-between">
@@ -17,12 +17,8 @@
                </div>
             </template>
 
-            <Column sortable field="id" header="ID" style="width: 5%"></Column>
-            <Column sortable field="name" header="Name" style="width: 15%"></Column>
-            <Column sortable field="firstSurname" header="First Surname" style="width: 20%"></Column>
-            <Column sortable field="secondSurname" header="Second Surname" style="width: 20%"></Column>
-            <Column sortable field="gender.name" header="Gender" style="width: 15%"></Column>
-            <Column sortable field="country" header="Country" style="width: 15%"></Column>
+            <Column sortable field="id" header="ID" style="width: 10%"></Column>
+            <Column sortable field="name" header="Name" style="width: 80%"></Column>
             <Column style="width: 10%">
                <template #header>
                   <div class="text-end w-full">
@@ -49,13 +45,13 @@
 
 <script lang="ts">
 import axios from 'axios'
-import type { ClientModel } from '@/server/models/clientModel'
+import type { RoomModel } from '@/server/models/roomModel'
 import { FilterMatchMode } from 'primevue/api';
 
 export default {
    data() {
       return {
-         clients: ref<ClientModel[]>([]),
+         rooms: ref<RoomModel[]>([]),
          loading: true,
          filters: {
             global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -68,10 +64,10 @@ export default {
    methods: {
       async refreshModel() {
          this.loading = true;
-         await axios.get(`/api/clients`)
+         await axios.get(`/api/rooms`)
             .then(res => {
                if (res.status == 200) {
-                  this.clients = res.data
+                  this.rooms = res.data
                   this.loading = false
                } else {
                   //@ts-expect-error
@@ -82,7 +78,7 @@ export default {
       async onRowClick(e: any) {
          const eId = e.data.id
          if (!isNaN(+eId)) {
-            await navigateTo("/clients/" + eId)
+            await navigateTo("/rooms/" + eId)
          } else {
             //@ts-expect-error
             this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
@@ -90,7 +86,7 @@ export default {
       },
       async deleteRecord(id: any) {
          this.loading = true;
-         await axios.post(`/api/clients/delete/${id}`).then(async res => {
+         await axios.post(`/api/rooms/delete/${id}`).then(async res => {
             if (res.status == 200) {
                await this.refreshModel()
                this.loading = false;

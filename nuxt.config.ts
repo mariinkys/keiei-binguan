@@ -6,5 +6,8 @@ export default defineNuxtConfig({
   primevue: {
     usePrimeVue: true,
     cssLayerOrder: 'tailwind-base, primevue, tailwind-utilities'
-  }
+  },
+  build: {
+    transpile: ['primevue']
+  },
 })

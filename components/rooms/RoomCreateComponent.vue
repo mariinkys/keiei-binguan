@@ -1,20 +1,9 @@
 <template>
    <div class="max-w-5xl m-auto">
       <form @submit.prevent="onSubmit" class="flex flex-col gap-8">
-         <!-- CLIENT SELECT COMPONENT -->
-         <ClientsClientSelectComponent @value-changed="(e) => reservation.clientId = e" :editing="true" />
-
-         <!-- ROOM SELECT COMPONENT -->
-         <RoomsRoomSelectComponent @value-changed="(e) => reservation.roomId = e" :editing="true" />
-
          <span class="p-float-label">
-            <Calendar v-model="reservation.checkInDate" dateFormat="dd/mm/yy" showIcon class="w-full" />
-            <label for="checkInDate">Check In</label>
-         </span>
-
-         <span class="p-float-label">
-            <Calendar v-model="reservation.checkOutDate" dateFormat="dd/mm/yy" showIcon class="w-full" />
-            <label for="costeCompra">Check Out</label>
+            <InputText id="name" v-model="room.name" class="w-full" required autocomplete="off" aria-autocomplete="none" />
+            <label for="name">Name</label>
          </span>
 
          <Button type="submit" label="Add" />
@@ -23,36 +12,30 @@
 </template>
 
 <script lang="ts">
-import { initDefaultReservation } from '@/server/models/reservationModel';
+import { initDefaultRoom } from '@/server/models/roomModel';
 import axios from 'axios'
 
 export default {
    data() {
       return {
-         reservation: initDefaultReservation()
+         room: initDefaultRoom()
       };
    },
    methods: {
       validate(): any[] {
          const errors = [];
-         if (!this.reservation.checkInDate)
-            errors.push({ path: "checkInDate", message: "Required" });
-         if (!this.reservation.checkOutDate)
-            errors.push({ path: "checkOutDate", message: "Required" });
-         if (!this.reservation.clientId)
-            errors.push({ path: "clientId", message: "Required" });
-         if (!this.reservation.roomId)
-            errors.push({ path: "roomId", message: "Required" });
+         if (!this.room.name)
+            errors.push({ path: "name", message: "Required" });
          return errors;
       },
       onSubmit() {
-         const body = this.reservation;
+         const body = this.room;
          if (this.validate().length === 0) {
-            axios.post("/api/reservations", {
+            axios.post("/api/rooms", {
                body
             }).then(async (res) => {
                if (res.status == 200) {
-                  await navigateTo("/");
+                  await navigateTo("/rooms");
                   //@ts-expect-error
                   this.$toast.add({ severity: "success", summary: "Created", detail: "Added!", life: 3000 });
                }

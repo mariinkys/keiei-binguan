@@ -5,24 +5,44 @@
       </div>
 
       <form @submit.prevent="onSubmit" class="flex flex-col gap-8">
-         <!-- CLIENT SELECT COMPONENT -->
-         <ClientsClientSelectComponent :pre-selected="reservation.roomId ?? undefined"
-            @value-changed="(e) => reservation.clientId = e" :editing="editing" />
-
-         <!-- ROOM SELECT COMPONENT -->
-         <RoomsRoomSelectComponent :pre-selected="reservation.roomId ?? undefined"
-            @value-changed="(e) => reservation.roomId = e" :editing="editing" />
-
          <span class="p-float-label">
-            <Calendar v-model="reservation.checkInDate" dateFormat="dd/mm/yy" showIcon :disabled="!editing"
-               class="w-full" />
-            <label for="checkInDate">Check In</label>
+            <InputText id="name" v-model="client.name" class="w-full" required autocomplete="off" aria-autocomplete="none"
+               :disabled="!editing" />
+            <label for="name">Name</label>
          </span>
 
          <span class="p-float-label">
-            <Calendar v-model="reservation.checkOutDate" dateFormat="dd/mm/yy" showIcon :disabled="!editing"
-               class="w-full" />
-            <label for="costeCompra">Check Out</label>
+            <InputText id="firstSurname" v-model="client.firstSurname" class="w-full" autocomplete="off"
+               aria-autocomplete="none" :disabled="!editing" />
+            <label for="firstSurname">First Surname</label>
+         </span>
+
+         <span class="p-float-label">
+            <InputText id="secondSurname" v-model="client.secondSurname" class="w-full" autocomplete="off"
+               aria-autocomplete="none" :disabled="!editing" />
+            <label for="secondSurname">Second Surname</label>
+         </span>
+
+         <GendersGenderSelectComponent :pre-selected="client.genderId ?? undefined"
+            @value-changed="(e) => client.genderId = e" :editing="editing" />
+
+         <span class="p-float-label">
+            <InputText id="country" v-model="client.country" class="w-full" autocomplete="off" aria-autocomplete="none"
+               :disabled="!editing" />
+            <label for="country">Country</label>
+         </span>
+
+         <span class="p-float-label">
+            <Calendar v-model="client.birthDate" dateFormat="dd/mm/yy" showIcon class="w-full" :disabled="!editing" />
+            <label for="birthDate">Birth Date</label>
+         </span>
+
+         <!-- THINK ABOUT HOW TO DISPLAY DOCUMENT.-->
+
+         <span class="p-float-label">
+            <InputText id="notes" v-model="client.notes" class="w-full" autocomplete="off" aria-autocomplete="none"
+               :disabled="!editing" />
+            <label for="notes">Notes</label>
          </span>
 
          <Button type="submit" label="Add" :disabled="!editing" />
@@ -34,50 +54,44 @@
 </template>
 
 <script lang="ts">
-import { initDefaultReservation, mapPrismaReservationModel } from '@/server/models/reservationModel';
+import { initDefaultClient, mapPrismaClientModel } from '@/server/models/clientModel';
 import axios from 'axios'
 
 export default {
    props: {
-      reservationId: Number,
+      clientId: Number,
    },
    data() {
       return {
-         reservation: initDefaultReservation(),
+         client: initDefaultClient(),
          loading: true,
          editing: false,
       };
    },
    async mounted() {
-      await axios.get(`/api/reservations/${this.reservationId}`)
+      await axios.get(`/api/clients/${this.clientId}`)
          .then(async res => {
             if (res.status == 200) {
-               this.reservation = mapPrismaReservationModel(res.data)
+               this.client = mapPrismaClientModel(res.data)
                this.loading = false
             } else {
                //@ts-expect-error
                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
-               await navigateTo("/")
+               await navigateTo("/clients")
             }
          })
    },
    methods: {
       validate(): any[] {
          const errors = [];
-         if (!this.reservation.checkInDate)
-            errors.push({ path: "checkInDate", message: "Required" });
-         if (!this.reservation.checkOutDate)
-            errors.push({ path: "checkOutDate", message: "Required" });
-         if (!this.reservation.clientId)
-            errors.push({ path: "clientId", message: "Required" });
-         if (!this.reservation.roomId)
-            errors.push({ path: "roomId", message: "Required" });
+         if (!this.client.name)
+            errors.push({ path: "name", message: "Required" });
          return errors;
       },
       onSubmit() {
-         const body = this.reservation;
+         const body = this.client;
          if (this.validate().length === 0) {
-            axios.post(`/api/reservations/${this.reservationId}`, {
+            axios.post(`/api/clients/${this.clientId}`, {
                body
             }).then(async (res) => {
                if (res.status == 200) {

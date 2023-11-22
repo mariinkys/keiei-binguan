@@ -7,14 +7,3 @@
       </nav>
    </header>
 </template>
-
-<script lang="ts">
-export default {
-   methods: {
-      switchTheme() {
-         //@ts-ignore
-         this.$primevue.changeTheme('md-dark-indigo', 'md-light-indigo', 'theme-link', () => { });
-      }
-   }
-}
-</script>

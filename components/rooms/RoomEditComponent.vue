@@ -5,24 +5,10 @@
       </div>
 
       <form @submit.prevent="onSubmit" class="flex flex-col gap-8">
-         <!-- CLIENT SELECT COMPONENT -->
-         <ClientsClientSelectComponent :pre-selected="reservation.roomId ?? undefined"
-            @value-changed="(e) => reservation.clientId = e" :editing="editing" />
-
-         <!-- ROOM SELECT COMPONENT -->
-         <RoomsRoomSelectComponent :pre-selected="reservation.roomId ?? undefined"
-            @value-changed="(e) => reservation.roomId = e" :editing="editing" />
-
          <span class="p-float-label">
-            <Calendar v-model="reservation.checkInDate" dateFormat="dd/mm/yy" showIcon :disabled="!editing"
-               class="w-full" />
-            <label for="checkInDate">Check In</label>
-         </span>
-
-         <span class="p-float-label">
-            <Calendar v-model="reservation.checkOutDate" dateFormat="dd/mm/yy" showIcon :disabled="!editing"
-               class="w-full" />
-            <label for="costeCompra">Check Out</label>
+            <InputText id="name" v-model="room.name" class="w-full" required autocomplete="off" aria-autocomplete="none"
+               :disabled="!editing" />
+            <label for="name">Name</label>
          </span>
 
          <Button type="submit" label="Add" :disabled="!editing" />
@@ -34,50 +20,44 @@
 </template>
 
 <script lang="ts">
-import { initDefaultReservation, mapPrismaReservationModel } from '@/server/models/reservationModel';
+import { initDefaultRoom, mapPrismaRoomModel } from '@/server/models/roomModel';
 import axios from 'axios'
 
 export default {
    props: {
-      reservationId: Number,
+      roomId: Number,
    },
    data() {
       return {
-         reservation: initDefaultReservation(),
+         room: initDefaultRoom(),
          loading: true,
          editing: false,
       };
    },
    async mounted() {
-      await axios.get(`/api/reservations/${this.reservationId}`)
+      await axios.get(`/api/rooms/${this.roomId}`)
          .then(async res => {
             if (res.status == 200) {
-               this.reservation = mapPrismaReservationModel(res.data)
+               this.room = mapPrismaRoomModel(res.data)
                this.loading = false
             } else {
                //@ts-expect-error
                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
-               await navigateTo("/")
+               await navigateTo("/clients")
             }
          })
    },
    methods: {
       validate(): any[] {
          const errors = [];
-         if (!this.reservation.checkInDate)
-            errors.push({ path: "checkInDate", message: "Required" });
-         if (!this.reservation.checkOutDate)
-            errors.push({ path: "checkOutDate", message: "Required" });
-         if (!this.reservation.clientId)
-            errors.push({ path: "clientId", message: "Required" });
-         if (!this.reservation.roomId)
-            errors.push({ path: "roomId", message: "Required" });
+         if (!this.room.name)
+            errors.push({ path: "name", message: "Required" });
          return errors;
       },
       onSubmit() {
-         const body = this.reservation;
+         const body = this.room;
          if (this.validate().length === 0) {
-            axios.post(`/api/reservations/${this.reservationId}`, {
+            axios.post(`/api/rooms/${this.roomId}`, {
                body
             }).then(async (res) => {
                if (res.status == 200) {

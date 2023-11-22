@@ -1,4 +1,4 @@
 <template>
-   <h2 class="text-center">/ Route</h2>
+   <h2 class="text-center">Reservations</h2>
    <ReservationsListComponent />
 </template> 

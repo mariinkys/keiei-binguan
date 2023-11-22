@@ -73,6 +73,7 @@ export default {
                   this.reservations = res.data
                   this.loading = false
                } else {
+                  //@ts-expect-error
                   this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
                }
             })
@@ -82,6 +83,7 @@ export default {
          if (!isNaN(+eId)) {
             await navigateTo("/reservations/" + eId)
          } else {
+            //@ts-expect-error
             this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
          }
       },
@@ -91,14 +93,17 @@ export default {
             if (res.status == 200) {
                await this.refreshModel()
                this.loading = false;
+               //@ts-expect-error
                this.$toast.add({ severity: 'success', summary: 'Success', detail: 'Deleted!', life: 3000 });
             }
             else {
                this.loading = false;
+               //@ts-expect-error
                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
             }
          }).catch(err => {
             this.loading = false;
+            //@ts-expect-error
             this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
             console.log(err)
          });
