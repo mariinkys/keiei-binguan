@@ -26,11 +26,6 @@ export default defineEventHandler(async (event) => {
                   id: +body.genderId
                }
             },
-            document: {
-               connect: {
-                  id: +body.documentId
-               }
-            },
             isDeleted: false,
             updatedAt: date
          }

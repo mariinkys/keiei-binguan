@@ -18,17 +18,13 @@ export default defineEventHandler(async (event) => {
                   id: +body.genderId
                }
             },
-            document: {
-               connect: {
-                  id: +body.documentId
-               }
-            },
             isDeleted: false,
          }
       });
       setResponseStatus(event, 200)
       return client
    } catch (error) {
+      console.log(error)
       setResponseStatus(event, 404)
       return event
    }
