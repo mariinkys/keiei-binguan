@@ -69,7 +69,6 @@ export default {
                this.client = mapPrismaClientModel(res.data)
                this.loading = false
             } else {
-               //@ts-expect-error
                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
                await navigateTo("/clients")
             }
@@ -90,23 +89,19 @@ export default {
             }).then(async (res) => {
                if (res.status == 200) {
                   this.loading = false;
-                  //@ts-expect-error
                   this.$toast.add({ severity: 'success', summary: 'Success', detail: 'Changes saved!', life: 3000 });
                }
                else {
                   this.loading = false;
-                  //@ts-expect-error
                   this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
                }
             }).catch(err => {
                this.loading = false;
-               //@ts-expect-error
                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
                console.log(err)
             });
          }
          else {
-            //@ts-expect-error
             this.$toast.add({ severity: "error", summary: "Error", detail: "Not valid!", life: 3000 });
          }
       }

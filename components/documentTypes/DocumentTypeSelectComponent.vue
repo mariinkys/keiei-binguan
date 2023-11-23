@@ -42,7 +42,6 @@ export default {
                   }
                   this.loading = false
                } else {
-                  //@ts-expect-error
                   this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
                }
             })

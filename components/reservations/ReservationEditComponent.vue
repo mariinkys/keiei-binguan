@@ -55,7 +55,6 @@ export default {
                this.reservation = mapPrismaReservationModel(res.data)
                this.loading = false
             } else {
-               //@ts-expect-error
                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
                await navigateTo("/")
             }
@@ -83,23 +82,19 @@ export default {
                if (res.status == 200) {
                   this.editing = false;
                   this.loading = false;
-                  //@ts-expect-error
                   this.$toast.add({ severity: 'success', summary: 'Success', detail: 'Changes saved!', life: 3000 });
                }
                else {
                   this.loading = false;
-                  //@ts-expect-error
                   this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
                }
             }).catch(err => {
                this.loading = false;
-               //@ts-expect-error
                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Something has gone wrong!', life: 3000 });
                console.log(err)
             });
          }
          else {
-            //@ts-expect-error
             this.$toast.add({ severity: "error", summary: "Error", detail: "Not valid!", life: 3000 });
          }
       }

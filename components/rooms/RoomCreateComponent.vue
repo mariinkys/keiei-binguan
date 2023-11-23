@@ -36,21 +36,17 @@ export default {
             }).then(async (res) => {
                if (res.status == 200) {
                   await navigateTo("/rooms");
-                  //@ts-expect-error
                   this.$toast.add({ severity: "success", summary: "Created", detail: "Added!", life: 3000 });
                }
                else {
-                  //@ts-expect-error
                   this.$toast.add({ severity: "error", summary: "Error", detail: "Something has gone wrong!", life: 3000 });
                }
             }).catch(err => {
-               //@ts-expect-error
                this.$toast.add({ severity: "error", summary: "Error", detail: "Something has gone wrong!", life: 3000 });
                console.log(err);
             });
          }
          else {
-            //@ts-expect-error
             this.$toast.add({ severity: "error", summary: "Error", detail: "Not valid!", life: 3000 });
          }
       }
