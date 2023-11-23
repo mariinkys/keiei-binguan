@@ -1,5 +1,5 @@
 <template>
-   <h2 class="text-center">{{ text ?? "Title not Found" }}</h2>
+   <h2 class="text-center text-3xl">{{ text ?? "Title not Found" }}</h2>
 </template>
 
 <script lang="ts">
