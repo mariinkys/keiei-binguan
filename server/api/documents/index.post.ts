@@ -5,9 +5,13 @@ export default defineEventHandler(async (event) => {
    const body = data.body
 
    try {
-      const document = await prisma.document.create({
-         data: {
-            expeditonDate: body.expeditonDate,
+      const document = await prisma.document.upsert({
+         where: {
+            clientId: +body.clientId
+         },
+         create: {
+            expeditonDate: body.expeditionDate,
+            documentValue: body.documentValue,
             documentType: {
                connect: {
                   id: +body.documentTypeId
@@ -19,11 +23,21 @@ export default defineEventHandler(async (event) => {
                }
             },
             isDeleted: false
+         },
+         update: {
+            expeditonDate: body.expeditionDate,
+            documentValue: body.documentValue,
+            documentType: {
+               connect: {
+                  id: +body.documentTypeId
+               }
+            }
          }
       });
       setResponseStatus(event, 200)
       return document
    } catch (error) {
+      console.log(error)
       setResponseStatus(event, 404)
       return event
    }

@@ -7,6 +7,7 @@ export type DocumentModel = {
    clientId: number | null,
    client: Client | null,
    expeditionDate: Date,
+   documentValue: string,
    isDeleted: boolean,
 }
 
@@ -18,6 +19,7 @@ export function mapPrismaDocumentModel(prismaModel: Document): DocumentModel {
       clientId: prismaModel.clientId,
       client: null,
       expeditionDate: prismaModel.expeditonDate,
+      documentValue: prismaModel.documentValue,
       isDeleted: prismaModel.isDeleted,
    };
 }
@@ -30,6 +32,7 @@ export function initDefaultDocument(): DocumentModel {
       clientId: null,
       client: null,
       expeditionDate: new Date,
+      documentValue: "",
       isDeleted: false,
    };
 }

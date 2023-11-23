@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
             notes: body.notes,
             gender: {
                connect: {
-                  id: +body.genderId
+                  id: +body.genderId ? +body.genderId : 3
                }
             },
             isDeleted: false,

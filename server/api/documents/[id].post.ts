@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
          },
          data: {
             expeditonDate: body.expeditonDate,
+            documentValue: body.documentValue,
             documentType: {
                connect: {
                   id: +body.documentTypeId

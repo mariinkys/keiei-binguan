@@ -48,7 +48,6 @@ export default {
             })
       },
       onValueChange(e: any) {
-         console.log(this.selectedDocumentType)
          if (e.id) {
             const id = +e.id
             this.$emit('value-changed', id)

@@ -1,9 +1,5 @@
 <template>
-   <div class="max-w-5xl m-auto" v-if="!loading">
-      <div class="my-3 text-end">
-         <ToggleButton v-model="editing" on-label="Editing" off-label="Not editing" />
-      </div>
-
+   <div class="max-w-full m-auto" v-if="!loading">
       <form @submit.prevent="onSubmit" class="flex flex-col gap-8">
          <span class="p-float-label">
             <InputText id="name" v-model="client.name" class="w-full" required autocomplete="off" aria-autocomplete="none"
@@ -37,15 +33,13 @@
             <label for="birthDate">Birth Date</label>
          </span>
 
-         <!-- THINK ABOUT HOW TO DISPLAY DOCUMENT.-->
-
          <span class="p-float-label">
             <InputText id="notes" v-model="client.notes" class="w-full" autocomplete="off" aria-autocomplete="none"
                :disabled="!editing" />
             <label for="notes">Notes</label>
          </span>
 
-         <Button type="submit" label="Add" :disabled="!editing" />
+         <Button type="submit" label="Edit" :disabled="!editing" />
       </form>
    </div>
    <div v-else>
@@ -60,12 +54,12 @@ import axios from 'axios'
 export default {
    props: {
       clientId: Number,
+      editing: Boolean
    },
    data() {
       return {
          client: initDefaultClient(),
          loading: true,
-         editing: false,
       };
    },
    async mounted() {
@@ -95,7 +89,6 @@ export default {
                body
             }).then(async (res) => {
                if (res.status == 200) {
-                  this.editing = false;
                   this.loading = false;
                   //@ts-expect-error
                   this.$toast.add({ severity: 'success', summary: 'Success', detail: 'Changes saved!', life: 3000 });

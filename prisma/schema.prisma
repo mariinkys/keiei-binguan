@@ -53,6 +53,7 @@ model Document {
   documentType   DocumentType @relation(fields: [documentTypeId], references: [id])
   documentTypeId Int
   expeditonDate  DateTime
+  documentValue  String
   client         Client       @relation(fields: [clientId], references: [id])
   clientId       Int          @unique
   isDeleted      Boolean      @default(false)

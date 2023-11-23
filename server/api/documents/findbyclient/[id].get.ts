@@ -1,18 +1,19 @@
-import prisma from './../../db/prisma';
+import prisma from './../../../db/prisma';
 
 export default defineEventHandler(async (event) => {
    const queryParams = getRouterParams(event)
-   const documentId = queryParams.id
+   const clientId = queryParams.id
 
    try {
       const document = await prisma.document.findUnique({
          where: {
-            id: +documentId,
+            clientId: +clientId,
             isDeleted: false
-         }
+         },
+         
       });
       setResponseStatus(event, 200)
-      return documents
+      return document
    } catch (error) {
       console.log(error)
       setResponseStatus(event, 404)
