@@ -20,8 +20,16 @@
             <Column sortable field="id" header="ID" style="width: 10%"></Column>
             <Column sortable field="client.name" header="Client" style="width: 20%"></Column>
             <Column sortable field="room.name" header="Room" style="width: 15%"></Column>
-            <Column sortable field="checkInDate" header="Check In" style="width: 15%"></Column>
-            <Column sortable field="checkOutDate" header="Check Out" style="width: 15%"></Column>
+            <Column sortable field="checkInDate" header="Check In" style="width: 15%">
+               <template #body="{ data }">
+                  {{ customFormatDate(data.checkInDate) }}
+               </template>
+            </Column>
+            <Column sortable field="checkOutDate" header="Check Out" style="width: 15%">
+               <template #body="{ data }">
+                  {{ customFormatDate(data.checkOutDate) }}
+               </template>
+            </Column>
             <Column style="width: 10%">
                <template #header>
                   <div class="text-end w-full">
@@ -50,6 +58,7 @@
 import axios from 'axios'
 import type { ReservationModel } from '@/server/models/reservationModel'
 import { FilterMatchMode } from 'primevue/api';
+import { customFormatDate } from '~/utils/customHelpers';
 
 export default {
    data() {

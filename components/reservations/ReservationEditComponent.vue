@@ -36,6 +36,7 @@
 <script lang="ts">
 import { initDefaultReservation, mapPrismaReservationModel } from '@/server/models/reservationModel';
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
    props: {

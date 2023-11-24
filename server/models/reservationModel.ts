@@ -1,4 +1,5 @@
 import { Client, Reservation, Room } from "@prisma/client";
+import moment from 'moment';
 
 export type ReservationModel = {
    id: number | null,
@@ -20,8 +21,8 @@ export function mapPrismaReservationModel(prismaModel: Reservation): Reservation
       client: null,
       roomId: prismaModel.roomId,
       room: null,
-      checkInDate: prismaModel.checkInDate,
-      checkOutDate: prismaModel.checkOutDate,
+      checkInDate: new Date(moment(prismaModel.checkInDate).format("YYYY-MM-DD")),
+      checkOutDate: new Date(moment(prismaModel.checkOutDate).format("YYYY-MM-DD")),
       isDeleted: prismaModel.isDeleted,
       createdAt: prismaModel.createdAt,
       updatedAt: prismaModel.updatedAt

@@ -1,4 +1,5 @@
 import { Client, Document, Gender } from "@prisma/client";
+import moment from 'moment';
 
 export type ClientModel = {
    id: number | null,
@@ -25,7 +26,7 @@ export function mapPrismaClientModel(prismaModel: Client): ClientModel {
       genderId: prismaModel.genderId,
       gender: null,
       country: prismaModel.country,
-      birthDate: prismaModel.birthDate,
+      birthDate: new Date(moment(prismaModel.birthDate).format("YYYY-MM-DD")),
       document: null,
       notes: prismaModel.notes,
       isDeleted: prismaModel.isDeleted,

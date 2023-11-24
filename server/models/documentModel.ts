@@ -1,4 +1,5 @@
 import { Client, Document, DocumentType } from "@prisma/client";
+import moment from 'moment';
 
 export type DocumentModel = {
    id: number | null,
@@ -18,7 +19,7 @@ export function mapPrismaDocumentModel(prismaModel: Document): DocumentModel {
       documentType: null,
       clientId: prismaModel.clientId,
       client: null,
-      expeditionDate: prismaModel.expeditonDate,
+      expeditionDate: new Date(moment(prismaModel.expeditonDate).format("YYYY-MM-DD")),
       documentValue: prismaModel.documentValue,
       isDeleted: prismaModel.isDeleted,
    };
