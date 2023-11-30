@@ -31,8 +31,6 @@
             <label for="birthDate">Birth Date</label>
          </span>
 
-         <!-- THINK ABOUT HOW TO DISPLAY DOCUMENT.-->
-
          <span class="p-float-label">
             <InputText id="notes" v-model="client.notes" class="w-full" autocomplete="off" aria-autocomplete="none" />
             <label for="notes">Notes</label>
