@@ -1,9 +1,5 @@
 <template>
-   <div class="max-w-5xl m-auto" v-if="!loading">
-      <div class="my-3 text-end">
-         <ToggleButton v-model="editing" on-label="Editing" off-label="Not editing" />
-      </div>
-
+   <div class="max-w-full m-auto" v-if="!loading">
       <form @submit.prevent="onSubmit" class="flex flex-col gap-8">
          <!-- CLIENT SELECT COMPONENT -->
          <ClientsClientSelectComponent :pre-selected="reservation.roomId ?? undefined"
@@ -25,7 +21,7 @@
             <label for="costeCompra">Check Out</label>
          </span>
 
-         <Button type="submit" label="Add" :disabled="!editing" />
+         <Button type="submit" label="Edit" :disabled="!editing" />
       </form>
    </div>
    <div v-else>
@@ -40,12 +36,12 @@ import axios from 'axios'
 export default {
    props: {
       reservationId: Number,
+      editing: Boolean
    },
    data() {
       return {
          reservation: initDefaultReservation(),
          loading: true,
-         editing: false,
       };
    },
    async mounted() {
@@ -80,7 +76,6 @@ export default {
                body
             }).then(async (res) => {
                if (res.status == 200) {
-                  this.editing = false;
                   this.loading = false;
                   this.$toast.add({ severity: 'success', summary: 'Success', detail: 'Changes saved!', life: 3000 });
                }

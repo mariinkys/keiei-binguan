@@ -41,6 +41,12 @@ model Reservation {
   isDeleted    Boolean  @default(false)
 }
 
+model ReservationGuests {
+  id            Int @id @default(autoincrement())
+  guestId       Int
+  reservationId Int
+}
+
 model Room {
   id          Int           @id @default(autoincrement())
   name        String        @unique
