@@ -65,7 +65,7 @@ export default {
                body
             }).then(async (res) => {
                if (res.status == 200) {
-                  await navigateTo("/clients");
+                  await navigateTo(`/clients/${res.data.id}`);
                   this.$toast.add({ severity: "success", summary: "Created", detail: "Added!", life: 3000 });
                }
                else {
